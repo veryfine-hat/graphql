@@ -15,6 +15,10 @@
     "graphql",
     "gql"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veryfine-hat/graphql"
+  },
   "author": "VeryFineHat",
   "license": "MIT",
   "devDependencies": {
