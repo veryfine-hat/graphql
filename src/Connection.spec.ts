@@ -1,12 +1,12 @@
 import {define} from "@byaga/graphql-schema";
 import {createConnectionSchema, listToConnection} from './Connection';
-import {PageInfo} from "./PageInfo";
 
 type TestType = { id: string, name: string }
 
 jest.mock("@byaga/graphql-schema", () => ({
-  define: jest.fn()
+  define: jest.fn(name => ({name}))
 }))
+
 
 it('should convert a list of items to a connection with correct edges and pageInfo', () => {
   const page: TestType[] = [{id: '1', name: 'Amy'}, {id: '2', name: 'Bob'}];
@@ -51,3 +51,16 @@ it('should define a gql schema for a Connection representing a specific type of 
   }`;
   expect(define).toHaveBeenCalledWith(schemaName, expectedSchema, [`${typeName}Edge`, 'PageInfo']);
 });
+
+describe("createConnectionSchema", () => {
+    it('should define the GraphQL schema for a Connection representing a specific type of data', () => {
+        const typeName = 'TestType';
+        const schemaName = createConnectionSchema(typeName);
+        expect(schemaName).toEqual(`${typeName}Connection`);
+        expect(define).toHaveBeenCalledWith(schemaName, `
+  type TestTypeConnection {
+    edges: [TestTypeEdge]
+    pageInfo: PageInfo
+  }`, [`TestTypeEdge`, 'PageInfo']);
+    });
+})

@@ -26,7 +26,7 @@ export function createFilter<T>(filterBy: Partial<Record<keyof T, T[keyof T]>>):
     indexes.flat().forEach(value => intersection.set(value, (intersection.get(value) ?? 0) + 1))
 
     return [...intersection.entries()]
-      .filter(([_, count]) => count === indexes.length)
+      .filter(([, count]) => count === indexes.length)
       .map(([id]) => data.get(id)!)
   }
 }

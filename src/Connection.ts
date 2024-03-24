@@ -1,11 +1,11 @@
 import {define} from "@byaga/graphql-schema";
 import {Edge, listToEdges, createEdgeSchema} from "./Edge";
-import {PageInfo} from "./PageInfo";
+import {PageInfo, schema} from "./PageInfo";
 
 /**
  * Interface to represent a paginated resource that connects together with others to represent a complete set
  */
-export interface Connection<T, K> {
+export interface Connection<T> {
   /**
    * The edges contained in this portion of the paginated list
    */
@@ -47,7 +47,7 @@ export const createConnectionSchema = (typeName: string) => {
   define(schemaName, `
   type ${schemaName} {
     edges: [${edgeSchemaName}]
-    pageInfo: PageInfo
-  }`, [edgeSchemaName, 'PageInfo'])
+    pageInfo: ${schema.name}
+  }`, [edgeSchemaName, schema.name])
   return schemaName
 }
