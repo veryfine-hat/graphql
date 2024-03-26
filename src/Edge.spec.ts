@@ -3,10 +3,6 @@ import {createEdgeSchema, listToEdges} from './Edge';
 
 type TestType = { id: number, name: string };
 
-jest.mock("@byaga/graphql-schema", () => ({
-  define: jest.fn()
-}))
-
 describe("toEdge", () => {
   it('should transform an item into an edge', () => {
     const item: TestType = {id: 1, name: 'Zoe'};
@@ -34,12 +30,10 @@ describe("listToEdges", () => {
 
 describe("createEdgeSchema", () => {
   it('should define the GraphQL schema for an Edge of a given type of nodes', () => {
-    const typeName = 'TestType';
-    const schemaName = createEdgeSchema(typeName);
-    expect(schemaName).toEqual(`${typeName}Edge`);
-    expect(define).toHaveBeenCalledWith(schemaName, `type ${schemaName} {
-    cursor: ID
-    node: ${typeName}
-  }`, [typeName]);
-  });
+    const type = define`type ${'TestType'} { }`;
+    const schema = createEdgeSchema(type);
+    expect(schema.name).toEqual(`${type.name}Edge`);
+    expect(schema.schema).toEqual(`type ${type.name}Edge {\n  cursor: ID\n  node: ${type.name}\n}`);
+    expect(schema.dependsOn).toEqual([type.name]);
+  })
 })

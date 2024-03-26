@@ -1,6 +1,6 @@
-import {define} from "@byaga/graphql-schema";
+import {define, SchemaDefinition} from "@byaga/graphql-schema";
 import {Edge, listToEdges, createEdgeSchema} from "./Edge";
-import {PageInfo, schema} from "./PageInfo";
+import {PageInfo, PageInfoSchema} from "./PageInfo";
 
 /**
  * Interface to represent a paginated resource that connects together with others to represent a complete set
@@ -39,15 +39,10 @@ export function listToConnection<T, K extends keyof T = keyof T>(page: T[], filt
 
 /**
  * Defines the gql schema for a Connection representing a specific type of data
- * @param typeName - Name of the type that this connection will contain
+ * @param type - schema definition that will represent the nodes in this connection
  */
-export const createConnectionSchema = (typeName: string) => {
-  const schemaName = `${typeName}Connection`
-  const edgeSchemaName = createEdgeSchema(typeName)
-  define(schemaName, `
-  type ${schemaName} {
-    edges: [${edgeSchemaName}]
-    pageInfo: ${schema.name}
-  }`, [edgeSchemaName, schema.name])
-  return schemaName
-}
+export const createConnectionSchema = (type: SchemaDefinition): SchemaDefinition => define`
+  type ${`${type.name}Connection`} {
+    edges: [${createEdgeSchema(type)}]
+    pageInfo: ${PageInfoSchema}
+  }`

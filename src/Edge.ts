@@ -1,4 +1,4 @@
-import {define} from "@byaga/graphql-schema"
+import {define, SchemaDefinition} from "@byaga/graphql-schema"
 
 /**
  * Edge is a type that contains a single item in a list of data.
@@ -37,13 +37,9 @@ export function listToEdges<T, K extends keyof T = keyof T>(page: T[], id: K) {
 
 /**
  * Defined the GraphQL schema for an Edge of a given type of nodes
- * @param typeName - The name of the type of each node
+ * @param type - The type of nodes that this edge will contain
  */
-export const createEdgeSchema = (typeName: string): string => {
-  const schemaName = `${typeName}Edge`
-  define(schemaName, `type ${schemaName} {
-    cursor: ID
-    node: ${typeName}
-  }`, [typeName])
-  return schemaName
-}
+export const createEdgeSchema = (type: SchemaDefinition): SchemaDefinition => define`type ${`${type.name}Edge`} {
+  cursor: ID
+  node: ${type}
+}`

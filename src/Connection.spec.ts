@@ -3,11 +3,6 @@ import {createConnectionSchema, listToConnection} from './Connection';
 
 type TestType = { id: string, name: string }
 
-jest.mock("@byaga/graphql-schema", () => ({
-  define: jest.fn(name => ({name}))
-}))
-
-
 it('should convert a list of items to a connection with correct edges and pageInfo', () => {
   const page: TestType[] = [{id: '1', name: 'Amy'}, {id: '2', name: 'Bob'}];
   const filterResult: TestType[] = [{id: '1', name: 'Amy'}, {id: '2', name: 'Bob'}, {id: '3', name: 'Charlie'}];
@@ -41,26 +36,27 @@ it('should return an empty connection when the list of items is empty', () => {
 });
 
 it('should define a gql schema for a Connection representing a specific type of data', () => {
-  const typeName = 'TestType';
+  const type = define`type ${'TestType'} {} `;
   // Assuming that the `getSchema` function exists and it returns the schema for a given name
-  const schemaName = createConnectionSchema(typeName);
-  const expectedSchema = `
+  const schema = createConnectionSchema(type);
+  expect(schema.schema).toEqual(`
   type TestTypeConnection {
     edges: [TestTypeEdge]
     pageInfo: PageInfo
-  }`;
-  expect(define).toHaveBeenCalledWith(schemaName, expectedSchema, [`${typeName}Edge`, 'PageInfo']);
+  }`);
+  expect(schema.dependsOn).toEqual(expect.arrayContaining(['PageInfo', "TestTypeEdge"]));
 });
 
 describe("createConnectionSchema", () => {
     it('should define the GraphQL schema for a Connection representing a specific type of data', () => {
-        const typeName = 'TestType';
-        const schemaName = createConnectionSchema(typeName);
-        expect(schemaName).toEqual(`${typeName}Connection`);
-        expect(define).toHaveBeenCalledWith(schemaName, `
+        const type = define`type ${'TestType'} {} `;
+        const schema = createConnectionSchema(type);
+        expect(schema.name).toEqual(`TestTypeConnection`);
+        expect(schema.schema).toEqual(`
   type TestTypeConnection {
     edges: [TestTypeEdge]
     pageInfo: PageInfo
-  }`, [`TestTypeEdge`, 'PageInfo']);
+  }`);
+        expect(schema.dependsOn).toEqual(expect.arrayContaining(['PageInfo', "TestTypeEdge"]));
     });
 })

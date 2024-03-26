@@ -22,9 +22,9 @@ export interface PageInfo {
   hasPreviousPage: boolean
 }
 
-export const schema = define('PageInfo', `type PageInfo {
+export const PageInfoSchema = define`type ${'PageInfo'} {
   startCursor: String
   endCursor: String
   hasNextPage: Boolean
   hasPreviousPage: Boolean
-}`)
+}`
