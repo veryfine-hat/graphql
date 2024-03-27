@@ -35,6 +35,6 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "@byaga/graphql-schema": "^0.2.0"
+    "@byaga/graphql-schema": "^0.2.1"
   }
 }
