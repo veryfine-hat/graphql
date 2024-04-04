@@ -34,6 +34,6 @@ describe("createEdgeSchema", () => {
     const schema = createEdgeSchema(type);
     expect(schema.name).toEqual(`${type.name}Edge`);
     expect(schema.schema).toEqual(`type ${type.name}Edge {\n  cursor: ID\n  node: ${type.name}\n}`);
-    expect(schema.dependsOn).toEqual([type.name]);
+    expect(schema.dependsOn).toEqual([type]);
   })
 })
