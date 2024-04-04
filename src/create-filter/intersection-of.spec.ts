@@ -1,7 +1,7 @@
 import { intersectionOf } from './intersection-of';
 import {QueryData} from "../QueryData";
-import {byPredicate} from "./by-predicate";
-import {objectIs} from "./object-is";
+import {property} from "./property";
+import {is} from "./is";
 
 interface TestType {
     id: string
@@ -17,8 +17,8 @@ describe('intersectionOf rule', () => {
         const collection = new QueryData(data);
 
         const result = intersectionOf<TestType>(
-            byPredicate('id', objectIs('id2')),
-            byPredicate('name', objectIs('value2'))
+            property('id', is('id2')),
+            property('name', is('value2'))
         )(collection);
 
         expect(result).toEqual(['id2']);
@@ -33,8 +33,8 @@ describe('intersectionOf rule', () => {
         const collection = new QueryData(data);
 
         const result = intersectionOf<TestType>(
-            byPredicate('id', objectIs('id1')),
-            byPredicate('name', objectIs('value4'))
+            property('id', is('id1')),
+            property('name', is('value4'))
         )(collection);
 
         expect(result).toEqual([]);
@@ -44,8 +44,8 @@ describe('intersectionOf rule', () => {
         const collection = new QueryData(new Map<string, TestType>());
 
         const result = intersectionOf<TestType>(
-            byPredicate('name', objectIs('value1')),
-            byPredicate('name', objectIs('value2'))
+            property('name', is('value1')),
+            property('name', is('value2'))
         )(collection);
 
         expect(result).toEqual([]);

@@ -6,7 +6,7 @@ import {QueryData} from "../QueryData";
  * @param predicate - Property to filter by
  * @param filter - Filter method to apply to the value collection
  */
-export const byPredicate = <T>(predicate: keyof T, filter: ObjectFilter<T[keyof T]>) =>
+export const property = <T>(predicate: keyof T, filter: ObjectFilter<T[keyof T]>) =>
     /**
      * Method which will filter the input data based on the predicate and filter method
      * @param collection - The raw collection of data

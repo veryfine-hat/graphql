@@ -19,18 +19,21 @@ The `intersectionOf` function takes one or more predicate filters and returns a 
 Here is an example of how to use `intersectionOf`:
 
 ```typescript
-import { intersectionOf } from 'querydata-filtering-library';
-import { QueryData } from 'querydata-filtering-library';
+import {intersectionOf, objectIsOneOf, objectIs, byPredicate} from '@byaga/graphql';
+import {QueryData} from '@byaga/graphql';
+import {byPredicate} from "./by-predicate";
 
-interface YourType { 
-    id: string, 
-    name: string 
+interface YourType {
+    id: string,
+    name: string,
+    amount: number
 }
+
 // Define your data
 const data = new Map<string, YourType>([
-    ['id1', { id: 'id1', name: 'value1' }],
-    ['id2', { id: 'id2', name: 'value2' }],
-    ['id3', { id: 'id3', name: 'value3' }]
+    ['id1', {id: 'id1', name: 'value1', value: 10}],
+    ['id2', {id: 'id2', name: 'value2', value: 10}],
+    ['id3', {id: 'id3', name: 'value3', value: 30}]
 ]);
 
 // Create a QueryData object
@@ -41,7 +44,10 @@ const filter1 = values => values.get('id1');
 const filter2 = values => values.get('value2');
 
 // Get the intersection of the results of the filters
-const result = intersectionOf<YourType>(filter1, filter2)(collection);
+const result = intersectionOf<YourType>(
+    property('value', is(10)),
+    property('name', isOneOf('value1', 'value2')),
+)(collection);
 
 console.log(result); // Outputs: ['id1', 'id2']
 console.log(collection.getItems(result)); // Outputs: [{ id: 'id1', name: 'value1' }, { id: 'id2', name: 'value2' }]

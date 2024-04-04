@@ -1,4 +1,4 @@
-import { objectIs } from './object-is';
+import { is } from './is';
 
 describe('objectIs rule', () => {
     it('should return elements that match the input value', () => {
@@ -6,7 +6,7 @@ describe('objectIs rule', () => {
         collection.set('key1', ['value1', 'value2']);
         collection.set('key2', ['value3', 'value4']);
 
-        const result = objectIs('key1')(collection);
+        const result = is('key1')(collection);
 
         expect(result).toEqual(['value1', 'value2']);
     });
@@ -16,7 +16,7 @@ describe('objectIs rule', () => {
         collection.set('key1', ['value1', 'value2']);
         collection.set('key2', ['value3', 'value4']);
 
-        const result = objectIs('key3')(collection);
+        const result = is('key3')(collection);
 
         expect(result).toEqual([]);
     });

@@ -1,6 +1,6 @@
-import { byPredicate } from './by-predicate';
+import { property } from './property';
 import {QueryData} from "../QueryData";
-import {objectIs} from "./object-is";
+import {is} from "./is";
 
 interface TestType {
     key: string
@@ -13,7 +13,7 @@ describe('byPredicate rule', () => {
         ]);
         const collection = new QueryData(data);
 
-        const result = byPredicate('key', objectIs('value1'))(collection);
+        const result = property('key', is('value1'))(collection);
 
         expect(result).toEqual(['id1']);
     });
@@ -25,7 +25,7 @@ describe('byPredicate rule', () => {
         ]);
         const collection = new QueryData(data);
 
-        const result = byPredicate('key', objectIs('value5'))(collection);
+        const result = property('key', is('value5'))(collection);
 
         expect(result).toEqual([]);
     });
@@ -33,7 +33,7 @@ describe('byPredicate rule', () => {
     it('should return an empty array when the collection is empty', () => {
         const collection = new QueryData<TestType>(new Map());
 
-        const result = byPredicate('key', objectIs('value1'))(collection);
+        const result = property('key', is('value1'))(collection);
 
         expect(result).toEqual([]);
     });

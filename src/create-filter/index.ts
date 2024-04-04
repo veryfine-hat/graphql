@@ -1,4 +1,4 @@
 export { byPredicate } from "./by-predicate";
 export { intersectionOf } from './intersection-of';
-export { objectIs } from "./object-is";
-export { objectIsOneOf } from './object-is-one-of'
+export { is } from "./is";
+export { isOneOf } from './is-one-of'
