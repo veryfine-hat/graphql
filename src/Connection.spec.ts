@@ -1,5 +1,7 @@
 import {define} from "@byaga/graphql-schema";
 import {createConnectionSchema, listToConnection} from './Connection';
+import {PageInfoSchema} from "./PageInfo";
+import {createEdgeSchema} from "./Edge";
 
 type TestType = { id: string, name: string }
 
@@ -44,7 +46,7 @@ it('should define a gql schema for a Connection representing a specific type of 
     edges: [TestTypeEdge]
     pageInfo: PageInfo
   }`);
-  expect(schema.dependsOn).toEqual(expect.arrayContaining(['PageInfo', "TestTypeEdge"]));
+  expect(schema.dependsOn).toEqual(expect.arrayContaining([PageInfoSchema, createEdgeSchema(type)]));
 });
 
 describe("createConnectionSchema", () => {
@@ -57,6 +59,6 @@ describe("createConnectionSchema", () => {
     edges: [TestTypeEdge]
     pageInfo: PageInfo
   }`);
-        expect(schema.dependsOn).toEqual(expect.arrayContaining(['PageInfo', "TestTypeEdge"]));
+        expect(schema.dependsOn).toEqual(expect.arrayContaining([PageInfoSchema, createEdgeSchema(type)]));
     });
 })
