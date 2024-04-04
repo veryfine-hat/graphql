@@ -23,15 +23,13 @@ it('should return undefined when getting by non-existent id', () => {
   expect(item).toBeUndefined();
 });
 
-it('should return the correct items when filtering by group', () => {
-  const ids = queryData.filter('group', '1');
-  expect(ids).toEqual(['1', '2']);
-});
-
-it('should return an empty array when filtering by non-existent name', () => {
-  const ids = queryData.filter('name', 'Item 4');
-  expect(ids).toEqual([]);
-});
+it('should return the correct items when getting by ids', () => {
+    const items = queryData.getItems(['1', '2']);
+    expect(items).toEqual([
+        {id: '1', name: 'Item 1', group: '1'},
+        {id: '2', name: 'Item 2', group: '1'},
+    ]);
+})
 
 it('should return the correct index when indexing by group', () => {
   const index = queryData.index('group');

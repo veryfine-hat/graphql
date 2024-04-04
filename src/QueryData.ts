@@ -3,15 +3,15 @@
  * @template T - The type of the data items.
  * @template K - The keys of the data items.
  */
-export class QueryData<T, K extends keyof T = keyof T> {
-  private readonly _data: Map<string, T>
-  private readonly _indexes: Map<K, Map<T[K], string[]>> = new Map<K, Map<T[K], string[]>>()
+export class QueryData<ItemType, Predicate extends keyof ItemType = keyof ItemType> {
+  private readonly _data: Map<string, ItemType>
+  private readonly _indexes: Map<Predicate, Map<ItemType[Predicate], string[]>> = new Map<Predicate, Map<ItemType[Predicate], string[]>>()
 
   /**
    * Create a QueryData object.
    * @param data - The data items.
    */
-  constructor(data: Map<string, T>) {
+  constructor(data: Map<string, ItemType>) {
     this._data = data
   }
 
@@ -20,12 +20,12 @@ export class QueryData<T, K extends keyof T = keyof T> {
    * @param {K} predicate - The key to index the data items by.
    * @return The indexed data items.
    */
-  index(predicate: K): Map<T[K], string[]> {
+  index(predicate: Predicate): Map<ItemType[Predicate], string[]> {
     const index = this._indexes.get(predicate)
 
     if (index !== undefined) return index;
 
-    const newIndex = new Map<T[K], string[]>()
+    const newIndex = new Map<ItemType[Predicate], string[]>()
     this._data.forEach((item, id) => {
       const key = item[predicate]
       const list = newIndex.get(key) ?? []
@@ -41,18 +41,15 @@ export class QueryData<T, K extends keyof T = keyof T> {
    * @param id - The ID of the data item.
    * @return The data item, or undefined if it does not exist.
    */
-  get(id: string): T | undefined {
+  get(id: string): ItemType | undefined {
     return this._data.get(id)
   }
 
   /**
-   * Returns the list of items that are an exact match to the filter.
-   * @param predicate - The key to filter the data items by.
-   * @param object - The value to filter the data items by.
-   * @return The IDs of the data items that match the filter.
+   * Get all the items associated with the input list
    */
-  filter(predicate: K, object: T[K]): string[] {
-    return this.index(predicate).get(object) ?? []
+  getItems(ids: string[]): ItemType[] {
+    return ids.map(id => this.get(id)).filter(item => item !== undefined) as ItemType[]
   }
 
   /**

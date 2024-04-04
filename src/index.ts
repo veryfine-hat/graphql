@@ -1,5 +1,5 @@
 export {createConnectionSchema, listToConnection, Connection } from "./Connection"
-export {createFilter, Filter} from "./create-filter"
+export * from "./create-filter"
 export {createSorter, Sorter} from "./create-sorter"
 export {createPager, Pager} from "./create-pager"
 export {createEdgeSchema, toEdge, listToEdges, Edge} from "./Edge"
