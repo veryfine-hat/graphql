@@ -51,4 +51,20 @@ describe('intersectionOf rule', () => {
 
         expect(result).toEqual([]);
     });
+
+    it('should allow passing a null to enable "optional" filters', () => {
+        const data = new Map<string, TestType>([
+            ['id1', { id: 'id1', name: 'value1', amount: 10 }],
+            ['id2', { id: 'id2', name: 'value2', amount: 10 }],
+            ['id3', { id: 'id3', name: 'value3', amount: 10 }]
+        ]);
+        const collection = new QueryData(data);
+
+        const result = intersectionOf<TestType>(
+            property<TestType, 'id'>('id', is('id1')),
+            null
+        )(collection);
+
+        expect(result).toEqual(['id1']);
+    });
 });
