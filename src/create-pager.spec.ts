@@ -31,7 +31,7 @@ it('should return an empty array when items are empty', () => {
 });
 
 it('should return whatever items are available if the page goes past the end of the list', () => {
-  const pager = createPager<TestType>('id', 2, 3);
+  const pager = createPager<TestType>('id', 2, 2);
   const items = [{id: 1, name: 'Zoe'}, {id: 2, name: 'Amy'}, {id: 3, name: 'Bob'}];
   const pagedItems = pager(items);
   expect(pagedItems).toEqual([{id: 3, name: 'Bob'}]);

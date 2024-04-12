@@ -15,17 +15,22 @@ export function createPager<T, K extends keyof T = keyof T, V extends T[K] = T[K
       }
 
       if (start < 0) return [];
-      return items.slice(Math.max(0, start + count), start)
+      return slice(items, start + count, start)
     }
   }
 
   return function nextPage(items: T[]): T[] {
-    let start = 0;
+    let start = -1;
     if (cursor !== undefined) {
       start = items.findIndex(item => item[idParam] === cursor);
+      if (start < 0) return [];
     }
+    start += 1;
 
-    if (start < 0) return [];
-    return items.slice(start, Math.min(start + count, items.length))
+    return slice(items, start, start + count)
+  }
+
+  function slice(items: T[], start: number, end: number) {
+    return items.slice(Math.max(0, start), Math.min(end, items.length))
   }
 }
