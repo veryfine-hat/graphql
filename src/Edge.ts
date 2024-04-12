@@ -7,7 +7,7 @@ export interface Edge<T, K extends keyof T = keyof T> {
   /**
    * The cursor/identifier of the item.
    */
-  cursor: T[K],
+  cursor: string,
   /**
    * The item itself.
    */
@@ -21,7 +21,7 @@ export interface Edge<T, K extends keyof T = keyof T> {
  */
 export function toEdge<T, K extends keyof T = keyof T>(item: T, id: K): Edge<T, K> {
   return {
-    cursor: item[id],
+    cursor: item[id]?.toString() || "",
     node: item
   }
 }

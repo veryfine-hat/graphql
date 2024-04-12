@@ -7,7 +7,7 @@ describe("toEdge", () => {
   it('should transform an item into an edge', () => {
     const item: TestType = {id: 1, name: 'Zoe'};
     const edge = listToEdges([item], "id");
-    expect(edge).toEqual([{cursor: 1, node: item}]);
+    expect(edge).toEqual([{cursor: "1", node: item}]);
   });
 })
 
@@ -16,8 +16,8 @@ describe("listToEdges", () => {
     const items: TestType[] = [{id: 1, name: 'Zoe'}, {id: 2, name: 'Amy'}];
     const edges = listToEdges(items, "id");
     expect(edges).toEqual([
-      {cursor: 1, node: items[0]},
-      {cursor: 2, node: items[1]},
+      {cursor: "1", node: items[0]},
+      {cursor: "2", node: items[1]},
     ]);
   });
 
