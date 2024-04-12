@@ -1,6 +1,6 @@
 {
   "name": "@byaga/graphql",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Library to help with the building of in-memory GraphQL services",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
