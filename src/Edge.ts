@@ -3,7 +3,7 @@ import {define, SchemaDefinition} from "@byaga/graphql-schema"
 /**
  * Edge is a type that contains a single item in a list of data.
  */
-export interface Edge<T, K extends keyof T = keyof T> {
+export interface Edge<T> {
   /**
    * The cursor/identifier of the item.
    */
