@@ -5,11 +5,11 @@ import {PageInfo, PageInfoSchema} from "./PageInfo";
 /**
  * Interface to represent a paginated resource that connects together with others to represent a complete set
  */
-export interface Connection<T, U extends keyof T> {
+export interface Connection<T> {
   /**
    * The edges contained in this portion of the paginated list
    */
-  edges: Edge<T, U>[],
+  edges: Edge<T>[],
   /**
    * Information about where this portion of the list fits in the complete set
    */

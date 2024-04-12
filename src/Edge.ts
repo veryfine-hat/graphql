@@ -19,7 +19,7 @@ export interface Edge<T> {
  * @param item - The items to transform into edges
  * @param id - The name of the field to use to get the cursor
  */
-export function toEdge<T, K extends keyof T = keyof T>(item: T, id: K): Edge<T, K> {
+export function toEdge<T, K extends keyof T = keyof T>(item: T, id: K): Edge<T> {
   return {
     cursor: item[id]?.toString() || "",
     node: item
