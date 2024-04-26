@@ -10,7 +10,7 @@ it('should return the next page of items when count is positive', () => {
 });
 
 it('should return the previous page of items when count is negative', () => {
-  const pager = createPager<TestType>('id', -2, 2);
+  const pager = createPager<TestType>('id', -2, 3);
   const items = [{id: 1, name: 'Zoe'}, {id: 2, name: 'Amy'}, {id: 3, name: 'Bob'}];
   const pagedItems = pager(items);
   expect(pagedItems).toEqual([{id: 1, name: 'Zoe'}, {id: 2, name: 'Amy'}]);
@@ -38,7 +38,7 @@ it('should return whatever items are available if the page goes past the end of 
 });
 
 it('should return whatever items are available if the page goes past the beginning of the list', () => {
-  const pager = createPager<TestType>('id', -2, 1);
+  const pager = createPager<TestType>('id', -2, 2);
   const items = [{id: 1, name: 'Zoe'}, {id: 2, name: 'Amy'}, {id: 3, name: 'Bob'}];
   const pagedItems = pager(items);
   expect(pagedItems).toEqual([{id: 1, name: 'Zoe'}]);

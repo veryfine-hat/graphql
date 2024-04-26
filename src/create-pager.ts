@@ -11,7 +11,7 @@ export function createPager<T, K extends keyof T = keyof T, V extends T[K] = T[K
     return function prevPage(items: T[]): T[] {
       let start = items.length;
       if (cursor !== undefined) {
-        start = items.findIndex(item => item[idParam] === cursor) + 1;
+        start = items.findIndex(item => item[idParam] === cursor);
       }
 
       if (start < 0) return [];
@@ -26,7 +26,6 @@ export function createPager<T, K extends keyof T = keyof T, V extends T[K] = T[K
       if (start < 0) return [];
     }
     start += 1;
-
     return slice(items, start, start + count)
   }
 
